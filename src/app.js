@@ -2,14 +2,18 @@
      import express from "express";
      import prisma from "./config/database.js";
      import userRoutes from "./routes/userRoutes.js";
+     import subjectRoutes from './routes/subjectRoutes.js';
+     import questionRoutes from './routes/questionRoutes.js';
 
      const app = express();
 
      // Middleware para parsing JSON
      app.use(express.json());
-
+     app.use('/subjects', subjectRoutes);
+     app.use('/questions', questionRoutes);
      /**
       * Verifica se a API e o banco de dados estão disponíveis.
+      * 
       * @param {Object} req - Requisição Express recebida na rota de saúde.
       * @param {Object} res - Resposta Express que informa o estado dos serviços.
       * @returns {Promise<void>} Envia `200` quando o banco responde ou `503` quando há falha.
