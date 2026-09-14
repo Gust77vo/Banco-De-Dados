@@ -146,22 +146,22 @@ export const updateUser = async (userId, userData) => {
 export const deleteUser = async (userId) => {
   const usuarioExistente = await prisma.user.findUnique({
     where: { id: userId },
-    select: {
-      ...publicUserSelect,
-      _count: {
-        select: { subjects: true, questions: true },
-      },
-    },
+    select: { id: true },
   });
 
   if (!usuarioExistente) {
     return { ok: false, reason: "NOT_FOUND" };
   }
 
-  if (
-    usuarioExistente._count.subjects > 0 ||
-    usuarioExistente._count.questions > 0
-  ) {
+  const countSubjects = await prisma.subject.count({
+    where: { professorId: userId },
+  });
+
+  const countQuestions = await prisma.question.count({
+    where: { authorId: userId },
+  });
+
+  if (countSubjects > 0 || countQuestions > 0) {
     return { ok: false, reason: "USER_IN_USE" };
   }
 

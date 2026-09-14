@@ -6,11 +6,19 @@
      import questionRoutes from './routes/questionRoutes.js';
 
      const app = express();
-
+    
+    app.use((req, res, next) => {
+      console.log(`[TESTE LOG] ${req.method} ${req.url}`);
+      next();
+    });
+    
      // Middleware para parsing JSON
      app.use(express.json());
      app.use('/subjects', subjectRoutes);
+     app.use('/materias', subjectRoutes);
      app.use('/questions', questionRoutes);
+     app.use('/questoes', questionRoutes);
+     
      /**
       * Verifica se a API e o banco de dados estão disponíveis.
       * 

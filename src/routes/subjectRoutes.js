@@ -2,7 +2,9 @@ import { Router } from 'express';
 import {
   createSubject,
   getSubjects,
-  getSubjectById
+  getSubjectById,
+  updateSubject,
+  deleteSubject
 } from '../controllers/subjectController.js';
 
 const router = Router();
@@ -10,5 +12,7 @@ const router = Router();
 router.post('/', createSubject);
 router.get('/', getSubjects);
 router.get('/:id', getSubjectById);
+router.patch('/:id', updateSubject);
+router.delete('/:id', deleteSubject);
 
 export default router;
